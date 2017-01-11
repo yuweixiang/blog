@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>管理系统</title>
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 可选的Bootstrap主题文件（一般不使用） -->
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- lightbox样式 -->
+    <link rel="stylesheet" href="${base}/css/lightbox.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
+
+
+    <script type="text/javascript">
+        var j=jQuery.noConflict();
+    </script>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="${base}">返回博客</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#" data-toggle="modal" data-target="#about-modal">关于</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+
+    <div class="modal fade" id="about-modal" tabindex="-1" role="dialog" aria-labelledby="modal-label"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" id="modal-label">关于</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: center;padding-top:30px;padding-bottom: 10px">
+                        <p>这是一个分享技术与生活的博客</p>
+                        <img src="${base}/img/1.png" width="100px" height="100px" class="img-circle">
+                        <div style="padding-top: 20px">
+                            <p>
+                                个人微信 ：yaoshengKK
+                            </p>
+                            <p>
+                                个人QQ ：88171985
+                            </p>
+                            <p>
+                                邮箱 ：kkys.china@gmail.com
+                            </p>
+                            <p>
+                                github ：https://github.com/KKys
+                            </p>
+                            <p>
+                                互相学习，共同进步.
+                            </p>
+                        </div>
+                    </div>
+                    <p style="text-align: right">By KKys</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">了解</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!--主体内容 -->
+<div class="container-fluid row">
+    <div class="container table_box col-lg-2 col-md-1"></div>
+    <div class="container table_box col-lg-8 col-md-10 col-xs-12" style="padding-left: 68px">
+        <!-- 管理导航栏 -->
+        <ul class="nav nav-tabs" role="tablist" id="feature-tab">
+            <li><a href="${base}/admin">文章</a></li>
+            <li class="active"><a href="${base}/album/admin">相册</a></li>
+        </ul>
+        <div style="padding-top: 10px">
+            <a data-toggle="modal" data-target="#add-album-modal" class="btn btn-info btn-sm">传照片</a>
+            <table class="table table-hover" id="album-table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>标题</th>
+                    <th>图片</th>
+                    <th>点赞数</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#assign var = 0 >
+                    <#list albumPage.getList() as x>
+                        <tr>
+                            <td>${var+1}</td>
+                            <td>${x.title!""}</td>
+                            <td>
+                                <a href="${x.url}" class="thumbnail" data-lightbox="example-set" data-title="<div style='padding-top:5px;font-size: 16px'>${x.title}</div>">
+                                    <img src="${x.url}" height="30px" style="height: 30px">
+                                </a>
+                            </td>
+                            <td>${x.praise_num!""}</td>
+                            <td>${x.create_time}</td>
+                            <td>
+                                <div class="btn-group btn-group-xs">
+                                    <a data-toggle="modal" data-target="#deleteBlogModel" type="button" class="btn btn-success">修改</a>
+                                    <a data-toggle="modal" data-target="#deleteBlogModel" type="button" class="btn btn-warning">删除</a>
+                                </div>
+                            </td>
+                            <!-- 信息删除确认 -->
+                            <div class="modal fade" id="deleteBlogModel">
+                                <div class="modal-dialog">
+                                    <div class="modal-content message_align">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <h4 class="modal-title">提示信息</h4>
+                                        </div>
+                                        <#if session.adminType==0>
+                                            <div class="modal-body">
+                                                <p>您确认要删除吗？</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="${base}/admin/deleteCar/${x.id}" class="btn btn-warning">确定</a>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            </div>
+                                            <#elseif session.adminType==1>
+                                                <div class="modal-body">
+                                                    <p>对不起，您没有此权限</p>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">了解</button>
+                                                    </div>
+                                                </div>
+                                        </#if>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </tr>
+                        <#assign var = var+1 >
+                    </#list>
+                </tbody>
+            </table>
+            <!-- 分页 -->
+            <nav style="text-align: center">
+                <#include "/common/_paginate.html" />
+                <@paginate currentPage=albumPage.pageNumber totalPage=albumPage.totalPage actionUrl="${base}/album/admin/" />
+            </nav>
+
+        </div>
+    </div>
+    <div class="container col-lg-2 col-md-1"></div>
+</div>
+
+<div class="modal fade" id="add-album-modal" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title">添加</h4>
+            </div>
+
+                <form action="${base}/album/add" method="post">
+                    <div class="modal-body">
+                        <div>
+                            <label style="font-size: 15px">标题:</label>
+                            <input style="display: inline;font-size:15px;width:250px;" name="album.title" type="text" class="form-control"/>
+                        </div>
+                        <div id="pic_div" style="padding-top: 5px;" >
+                            <label style="font-size: 15px">图片: </label>
+                            <div id="show"></div>
+                            <!-- 存储图片地址，并显示图片 -->
+                            <input type="hidden" name="album.url" id="pictureSrc">
+                        </div>
+                        <div style="padding-top: 5px">
+                            <input type="file" name="image" id="imageFile">
+                        </div>
+                        <div style="padding-top: 5px">
+                            <button id="upload" onclick="return false;">上传</button>
+                        </div>
+                    </div>
+                    <#if session.adminType==0>
+                        <input type="hidden" name="userType" value="0">
+                    <#elseif session.adminType==1>
+                        <input type="hidden" name="userType" value="1">
+                    </#if>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">添加</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    j(document).ready(function() {
+        j('#upload').click(function() {
+            upload();
+        });
+    });
+
+    //ajax上传图片
+    function upload() {
+        j.ajaxFileUpload({
+            url : '${base}/imageUpload',   //提交的路径
+            fileElementId : 'imageFile', // file控件id
+            dataType : 'text',
+            //这个data在模态框里，框架自带了样式，需要正则匹配下
+            success : function(data) {
+                var reg = "\>(.*?)\<";
+                var last = data.match(reg);
+                j('#show').append("<img height='140px' src='" + last[1] + "'>");  //显示图片
+                j('#pictureSrc').val(last[1]);   //保存路径
+            }
+        });
+    }
+
+
+
+</script>
+<script src="${base}/js/lightbox.js"></script>
+<script src="${base}/js/ajaxfileupload.js"></script>
+</body>
+</html>

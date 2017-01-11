@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>管理系统</title>
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 可选的Bootstrap主题文件（一般不使用） -->
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- lightbox样式 -->
+    <link rel="stylesheet" href="${base}/css/lightbox.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
+
+
+    <script type="text/javascript">
+        var j=jQuery.noConflict();
+    </script>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="${base}">返回博客</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#" data-toggle="modal" data-target="#about-modal">关于</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+
+    <div class="modal fade" id="about-modal" tabindex="-1" role="dialog" aria-labelledby="modal-label"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" id="modal-label">关于</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: center;padding-top:30px;padding-bottom: 10px">
+                        <p>这是一个分享技术与生活的博客</p>
+                        <img src="${base}/img/1.png" width="100px" height="100px" class="img-circle">
+                        <div style="padding-top: 20px">
+                            <p>
+                                个人微信 ：yaoshengKK
+                            </p>
+                            <p>
+                                个人QQ ：88171985
+                            </p>
+                            <p>
+                                邮箱 ：kkys.china@gmail.com
+                            </p>
+                            <p>
+                                github ：https://github.com/KKys
+                            </p>
+                            <p>
+                                互相学习，共同进步.
+                            </p>
+                        </div>
+                    </div>
+                    <p style="text-align: right">By KKys</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">了解</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!--主体内容 -->
+<div class="container-fluid row">
+    <div class="container table_box col-lg-2 col-md-1"></div>
+    <div class="container table_box col-lg-8 col-md-10 col-xs-12" style="padding-left: 68px">
+        <!-- 管理导航栏 -->
+        <ul class="nav nav-tabs" role="tablist" id="feature-tab">
+            <li class="active"><a href="${base}/admin">文章</a></li>
+            <li><a href="${base}/album/admin">相册</a></li>
+        </ul>
+        <div style="padding-top: 10px">
+
+            <a data-toggle="modal" data-target="#add-blog-modal" class="btn btn-info btn-sm">写文章</a>
+            <table class="table table-hover" id="blog-table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>标题</th>
+                    <th>图片</th>
+                    <th>文章编号</th>
+                    <th>阅读量</th>
+                    <th>评论数</th>
+                    <th>点赞数</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#assign var = 0 >
+                    <#list blogPage.getList() as x>
+                        <tr>
+                            <td>${var+1}</td>
+                            <td><a href="#" name="${var+1}" onclick="editInfo(this)">${x.title!""}</a></td>
+                            <td>
+                                <a href="${x.pic_url!''}" class="thumbnail" data-lightbox="example-set" data-title="<div style='padding-top:5px;font-size: 16px'>${x.title}</div>">
+                                    <img src="${x.pic_url!''}" height="30px" style="height: 30px">
+                                </a>
+                            </td>
+                            <td>NO.${x.id!""}</td>
+                            <td>${x.click_times!""}</td>
+                            <td>${x.comment_times!""}</td>
+                            <td>${x.agree_with_times!""}</td>
+                            <td>${x.create_time}</td>
+                            <td>
+                                <div class="btn-group btn-group-xs">
+                                    <button type="button" class="btn btn-success" name="${var+1}" onclick="editInfo(this)">修改</button>
+                                    <a data-toggle="modal" data-target="#deleteBlogModel" type="button" class="btn btn-warning">删除</a>
+                                </div>
+                            </td>
+                            <!-- 信息删除确认 -->
+                            <div class="modal fade" id="deleteBlogModel">
+                                <div class="modal-dialog">
+                                    <div class="modal-content message_align">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            <h4 class="modal-title">提示信息</h4>
+                                        </div>
+                                        <#if session.adminType==0>
+                                            <div class="modal-body">
+                                                <p>您确认要删除吗？</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="${base}/admin/deleteCar/${x.id}" class="btn btn-warning">确定</a>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            </div>
+                                        <#elseif session.adminType==1>
+                                            <div class="modal-body">
+                                                <p>对不起，您没有此权限</p>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">了解</button>
+                                                </div>
+                                            </div>
+                                        </#if>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </tr>
+                        <#assign var = var+1 >
+                    </#list>
+                </tbody>
+            </table>
+            <!-- 分页 -->
+            <nav style="text-align: center">
+                <#include "/common/_paginate.html" />
+                <@paginate currentPage=blogPage.pageNumber totalPage=blogPage.totalPage actionUrl="${base}/admin/" />
+            </nav>
+
+        </div>
+    </div>
+    <div class="container col-lg-2 col-md-1"></div>
+</div>
+
+<div class="modal fade" id="add-blog-modal" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title">添加</h4>
+            </div>
+
+                <form action="${base}/save" method="post">
+                    <div class="modal-body">
+                        <div>
+                            <label style="font-size: 15px">标题:</label>
+                            <input style="display: inline;font-size:15px;width:250px;" name="blog.title" type="text" class="form-control"/>
+                        </div>
+                        <div style="padding-top: 5px">
+                            <label style="font-size: 15px">分类:</label>
+                            <select name="blog.type" class="form-control" style="font-size:15px;width:250px;display: inline">
+                                <option value="0">学习</option>
+                                <option value="1">生活</option>
+                                <option value="2">随笔</option>
+                            </select>
+                        </div>
+                        <div id="pic_div" style="padding-top: 5px;" >
+                            <label style="font-size: 15px">图片: </label>
+                            <div id="show"></div>
+                            <!-- 存储图片地址，并显示图片 -->
+                            <input type="hidden" name="blog.pic_url" id="pictureSrc">
+                        </div>
+                        <div style="padding-top: 5px">
+                            <input type="file" name="image" id="imageFile">
+                        </div>
+                        <div style="padding-top: 5px">
+                            <button id="upload" onclick="return false;">上传</button>
+                        </div>
+                        <div style="padding-top: 8px">
+                            <textarea name="blog.content" class="ckeditor">请输入.</textarea>
+                        </div>
+                    </div>
+                    <#if session.adminType==0>
+                        <input type="hidden" name="userType" value="0">
+                    <#elseif session.adminType==1>
+                        <input type="hidden" name="userType" value="1">
+                    </#if>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">添加</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update-blog-modal" tabindex="-1" role="dialog" aria-labelledby="modal-label"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title">查看</h4>
+            </div>
+            <form action="${base}/update" method="post">
+                <div class="modal-body">
+                    <div>
+                        <label style="font-size: 15px">编号:</label>
+                        <input style="display: inline;font-size:15px;width:250px;" id="id" name="blog.id" type="text" class="form-control" readonly/>
+                    </div>
+                    <div style="padding-top: 5px">
+                        <label style="font-size: 15px">标题:</label>
+                        <input style="display: inline;font-size:15px;width:250px;" id="title" name="blog.title" type="text" class="form-control"/>
+                    </div>
+                    <div style="padding-top: 5px">
+                        <label style="font-size: 15px">分类:</label>
+                        <select name="type" id="blog.type" class="form-control" style="font-size:15px;width:250px;display: inline">
+                            <option value="0">学习</option>
+                            <option value="1">生活</option>
+                            <option value="2">随笔</option>
+                        </select>
+                    </div>
+
+                    <div style="padding-top: 5px;" >
+                        <label style="font-size: 15px">图片: </label>
+                        <!-- 存储图片地址，并显示图片 -->
+                        <img height="140px" id="blog_update_image">
+                        <input id="update_blog_image" type="hidden" name="blog.pic_url">
+                    </div>
+                    <div style="padding-top: 8px">
+                        <textarea id="content" name="blog.content" class="ckeditor"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <#if session.adminType==0>
+                        <button type="submit" class="btn btn-success">保存</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <#elseif session.adminType==1>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">了解</button>
+                    </#if>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    //编辑-查看信息
+    function editInfo(obj) {
+        var id = j(obj).attr("name");
+        //获取表格中的一行数据
+        var id_db = document.getElementById("blog-table").rows[id].cells[3].innerText.substring(3);
+        //向模态框中传值
+        j('#id').val(id_db);
+        j.ajax({
+            type:'get',
+            url:'${base}/get/'+id_db,
+            cache:false,
+            dataType:'json',
+            success:function(data){
+                j('#title').val(data.title);
+                j('#type').val(data.type);
+                //放入img的src
+                j('#blog_update_image').attr('src',data.pic_url);
+                j('#update_blog_image').val(data.pic_url);
+                CKEDITOR.instances.content.setData(data.content);
+            },
+        });
+        j('#update-blog-modal').modal('show');
+    }
+
+    j(document).ready(function() {
+        j('#upload').click(function() {
+            upload();
+        });
+    });
+
+    //ajax上传图片
+    function upload() {
+        j.ajaxFileUpload({
+            url : '${base}/imageUpload',   //提交的路径
+            fileElementId : 'imageFile', // file控件id
+            dataType : 'text',
+            //这个data在模态框里，框架自带了样式，需要正则匹配下
+            success : function(data) {
+                var reg = "\>(.*?)\<";
+                var last = data.match(reg);
+                j('#show').append("<img height='140px' src='" + last[1] + "'>");  //显示图片
+                j('#pictureSrc').val(last[1]);   //保存路径
+            }
+        });
+    }
+
+
+
+</script>
+<script src="${base}/js/lightbox.js"></script>
+<script src="${base}/js/ajaxfileupload.js"></script>
+</body>
+</html>
