@@ -15,8 +15,8 @@
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
-
+    <script type="text/javascript" src="${base}/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">CKEDITOR.replace( 'blog.content' )</script>
 
     <script type="text/javascript">
         var j=jQuery.noConflict();
@@ -207,7 +207,11 @@
                             <button id="upload" onclick="return false;">上传</button>
                         </div>
                         <div style="padding-top: 8px">
-                            <textarea name="blog.content" class="ckeditor">请输入.</textarea>
+                            <!--<textarea name="blog.content" class="ckeditor">请输入.</textarea>-->
+                            <!--<textarea id="blog.content" cols="20" rows="2" class="ckeditor"></textarea>-->
+                            <textarea class="ckeditor" id="blog.content" name="blog.content" cols="80" rows="10">请输入.</textarea>
+
+
                         </div>
                     </div>
                     <#if session.adminType==0>
