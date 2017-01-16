@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : KKys
+Source Server         : yuweixiang
 Source Server Version : 50173
 Source Host           : 121.42.8.85:3306
 Source Database       : jfinal

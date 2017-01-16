@@ -29,7 +29,7 @@ public class DemoConfig extends JFinalConfig {
 		// 加载少量必要配置，随后可用getProperty(...)获取值
 		loadPropertyFile("a_little_config.txt");
 		me.setDevMode(true);//开发者模式，打印了调试信息
-		me.setBaseUploadPath("/usr/local/apache-tomcat-7.0.64/webapps/upload");
+		me.setBaseUploadPath("/Users/yuweixiang/Documents/tools/apache-tomcat-7.0.73/webapps/upload");
 	}
 	
 	/**
@@ -46,11 +46,11 @@ public class DemoConfig extends JFinalConfig {
 	 */
 	public void configPlugin(Plugins me) {
 		// 配置C3p0数据库连接池插件
-		C3p0Plugin c3p0Plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password").trim());
-//		DruidPlugin dp = new DruidPlugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password").trim());
-		me.add(c3p0Plugin);
+//		C3p0Plugin c3p0Plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password").trim());
+		DruidPlugin dp = new DruidPlugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password").trim());
+		me.add(dp);
 		// 配置ActiveRecord插件
-		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
+		ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
 		arp.setShowSql(true);
 		me.add(arp);
 		arp.addMapping("blog", Blog.class);	// 映射blog 表到 Blog模型
