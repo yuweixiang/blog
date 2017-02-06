@@ -7,7 +7,12 @@ import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.tx.Tx;
+import com.jfinal.upload.UploadFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -136,6 +141,29 @@ public class BlogController extends Controller {
 	//上传图片
 	public void imageUpload() {
 		renderJson("/upload/"+getFile().getFileName());
+
+	}
+
+	@Before(Tx.class)
+	public void ckeditorUpload(){
+		try {
+			PrintWriter out = getResponse().getWriter();
+			UploadFile file = getFile();
+			if (!file.getFileName().endsWith("jpg")&&!file.getFileName().endsWith("png")) {
+				out.print("<font color=\"red\"size=\"2\">*picture format is worng!（it must be.jpg/.gif/.bmp/.png file）</font>");
+				return;
+			}
+			String callback =getRequest().getParameter("CKEditorFuncNum");
+
+			out.println("<script type=\"text/javascript\">");
+
+			out.println("window.parent.CKEDITOR.tools.callFunction("+ callback + ",'" + "/upload/"+ file.getFileName() + "','')");
+
+			out.println("</script>");
+
+		}catch (Exception e){
+
+		}
 	}
 
 	/**

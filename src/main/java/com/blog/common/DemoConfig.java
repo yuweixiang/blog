@@ -29,7 +29,7 @@ public class DemoConfig extends JFinalConfig {
 		// 加载少量必要配置，随后可用getProperty(...)获取值
 		loadPropertyFile("a_little_config.txt");
 		me.setDevMode(true);//开发者模式，打印了调试信息
-		me.setBaseUploadPath("/Users/yuweixiang/Documents/tools/apache-tomcat-7.0.73/webapps/upload");
+		me.setBaseUploadPath("/Users/yuweixiang/Documents/myWorkspace/blog/target/blog-1.0/upload");
 	}
 	
 	/**

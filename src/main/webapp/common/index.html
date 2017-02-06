@@ -69,7 +69,19 @@
 			position:relative;
 			top:1px;
 		}
-
+		div#div1{
+			position:fixed;
+			top:0;
+			left:0;
+			bottom:0;
+			right:0;
+			z-index:-1;
+		}
+		div#div1 > img {
+			height:100%;
+			width:100%;
+			border:0;
+		}
 	</style>
 </head>
 <body>
@@ -153,7 +165,7 @@
 		</div>
 	</div>
 </nav>
-
+<div id="div1"><img src="/img/background.jpg" /></div>
 <#nested>
 
 <#if pageSearchType==0>
