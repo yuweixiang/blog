@@ -17,75 +17,116 @@
                         <a href="${base}/searchByType/2" class="label label-warning" style="font-size: 16px">随笔</a>
             </#if>
         </div>
-        <label style="font-size: 15px;text-align: left"><span class="glyphicon glyphicon-eye-open" style="color: gray" aria-hidden="true"></span> <a style="text-decoration:none;" href="${base}/detail/${x.id}">阅读</a>(${x.click_times})</label>
+        <label style="font-size: 15px;text-align: left"><span class="glyphicon glyphicon-eye-open" style="color: gray"
+                                                              aria-hidden="true"></span> <a
+                style="text-decoration:none;" href="${base}/detail/${x.id}">阅读</a>(${x.click_times})</label>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <label style="font-size: 15px;text-align: left"><span class="glyphicon glyphicon-edit" style="color: gray" aria-hidden="true"></span>  <a style="text-decoration:none;" href="${base}/detail/${x.id}#comment_id">评论</a>(${x.comment_times})</label>
+        <label style="font-size: 15px;text-align: left"><span class="glyphicon glyphicon-edit" style="color: gray"
+                                                              aria-hidden="true"></span> <a
+                style="text-decoration:none;"
+                href="${base}/detail/${x.id}#comment_id">评论</a>(${x.comment_times})</label>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <label style="font-size: 15px;text-align: left"><span class="glyphicon glyphicon-thumbs-up" style="color: gray" aria-hidden="true"></span>  推荐(${x.agree_with_times})</label>
+        <label style="font-size: 15px;text-align: left"><span class="glyphicon glyphicon-thumbs-up" style="color: gray"
+                                                              aria-hidden="true"></span>
+            推荐(${x.agree_with_times})</label>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <label style="font-size: 15px">${x.create_time}</label>
     </div>
     <hr>
     <div style="padding-top: 4px;padding-left: 10px;padding-right: 10px;">${x.content}</div>
-    <div><h1 style="padding-bottom: 10px;text-align: center"></h1></div>
+
+    </br>
+
+    <p class="post-copyright">纯手工制作，如未经允许请勿转载</p>
+
+    <!--<div><h1 style="padding-bottom: 10px;text-align: center">打赏</h1></div>-->
+    <div class="money-like" id="like-money">
+        <div class="reward-button">赏
+            <span class="money-code">
+                <span class="alipay-code">
+                    <img class="alipay-img" src="/img/alipay.png"><b>支付宝扫码打赏</b>
+                </span>
+                <span class="wechat-code">
+                    <img class="wechat-img" src="/img/wechat.png"><b>微信打赏</b>
+                </span>
+            </span>
+        </div>
+        <p class="money-notice">大方打赏，支持作者提供更好的文章</p>
+    </div>
+
+    <div class="action-share bdsharebuttonbox bdshare-button-style0-24" data-bd-bind="1486380980399">
+        <div align="center">分享到微信朋友圈（扫以下二维码即可）：</div>
+    </div>
+    <div id="qrcode" align="center">
+    </div>
+
     <hr style="border: 1px solid silver;">
     <#if (commentList?size>0)>
         <h3 style="padding-top: 10px">评论列表&nbsp;&nbsp;&nbsp;&nbsp;${x.comment_times}条</h3>
-     <#else>
-        <h3>暂无评论</h3>
+        <#else>
+            <h3>暂无评论</h3>
     </#if>
     <#assign var = 0 >
-    <div style="padding-top: 10px;padding-left: 10px;padding-right: 10px">
-    <#list commentList as comment>
-        <span style="color:black;width: 40px">${var+1}楼</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <span class="glyphicon glyphicon-user" style="color: gray ;width:150px" aria-hidden="true">&nbsp;${comment.username}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span class="glyphicon glyphicon-envelope" style="color: gray;width:300px" aria-hidden="true">&nbsp;${comment.email}</span>
-        <div style="font-size:16px;padding: 20px 50px 10px 45px;">${comment.content!""}</div>
-        <div style="color:gray;float: right">
-            <i>评论于 ${comment.create_time}</i>
+        <div style="padding-top: 10px;padding-left: 10px;padding-right: 10px">
+            <#list commentList as comment>
+                <span style="color:black;width: 40px">${var+1}楼</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-user" style="color: gray ;width:150px" aria-hidden="true">&nbsp;${comment.username}</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-envelope" style="color: gray;width:300px" aria-hidden="true">&nbsp;${comment.email}</span>
+                <div style="font-size:16px;padding: 20px 50px 10px 45px;">${comment.content!""}</div>
+                <div style="color:gray;float: right">
+                    <i>评论于 ${comment.create_time}</i>
+                </div>
+                <hr>
+                <#assign var = var+1 >
+            </#list>
         </div>
-        <hr>
-        <#assign var = var+1 >
-    </#list>
-    </div>
 
-    <form id="comment_id" action="${base}/comment/add" method="post">
-        <fieldset>
-            <legend>评论</legend>
-            <input value="${x.id}" type="hidden" name="comment.blog_id">
-            <div class="form-inline">
-                <div class="form-group col-lg-offset-1">
-                    <label style="font-size: 15px;width: 60px;">* 姓  名：</label>
-                    <input style="width:200px;font-size: 15px" type="text" minlength="4" maxlength="30" class="form-control" name="comment.username" required>
+        <form id="comment_id" action="${base}/comment/add" method="post">
+            <fieldset>
+                <legend>无需登录，欢迎评论</legend>
+                <input value="${x.id}" type="hidden" name="comment.blog_id">
+                <div class="form-inline">
+                    <div class="form-group col-lg-offset-1">
+                        <label style="font-size: 15px;width: 60px;">* 姓 名：</label>
+                        <input style="width:200px;font-size: 15px" type="text" minlength="4" maxlength="30"
+                               class="form-control" name="comment.username" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-inline">
-                <div class="form-group  col-lg-offset-1" >
-                    <label style="font-size: 15px;width: 60px;padding-top: 20px" >* 邮  箱：</label>
-                    <input style="width:200px;font-size: 15px" type="email" class="form-control" name="comment.email" required>
+                <div class="form-inline">
+                    <div class="form-group  col-lg-offset-1">
+                        <label style="font-size: 15px;width: 60px;padding-top: 20px">* 邮 箱：</label>
+                        <input style="width:200px;font-size: 15px" type="email" class="form-control"
+                               name="comment.email" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-inline" style="padding-top: 20px">
-                <div class="form-group  col-lg-offset-1" >
-                    <label style="font-size: 15px;width: 60px" >* 内  容：</label>
-                    <textarea name="comment.content" style="width: 500px" class="form-control" rows="4"></textarea>
+                <div class="form-inline" style="padding-top: 20px">
+                    <div class="form-group  col-lg-offset-1">
+                        <label style="font-size: 15px;width: 60px">* 内 容：</label>
+                        <textarea name="comment.content" style="width: 500px" class="form-control" rows="4"></textarea>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-lg-offset-1" style="padding-top: 20px;padding-left: 60px;padding-bottom: 15px">
-                <button type="submit"  style="width: 200px;text-align: center" class="btn btn-info">评论</button>
-            </div>
-        </fieldset>
-    </form>
+                <div class="col-lg-offset-1" style="padding-top: 20px;padding-left: 60px;padding-bottom: 15px">
+                    <button type="submit" style="width: 200px;text-align: center" class="btn btn-info">评论</button>
+                </div>
+            </fieldset>
+        </form>
 </div>
 
 <script type="text/javascript">
-    var j=jQuery.noConflict();
-    j().ready(function() {
+    var j = jQuery.noConflict();
+    j().ready(function () {
         j("#comment_id").validate();
     });
-</script>
 
+    window.onload = function () {
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width: 96,//设置宽高
+            height: 96
+        });
+        qrcode.makeCode("http://30.15.59.88:8080/detail/${x.id}");
+    }
+</script>
 </@index>

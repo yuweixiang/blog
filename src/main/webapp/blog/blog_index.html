@@ -45,42 +45,42 @@
             </#if>
         </nav>
     </div>
-    <div class="container col-lg-3" style="padding-left: 90px;padding-right: 60px">
+    <div class="container col-lg-4" style="padding-left: 90px;padding-right: 60px">
         <div>
-            <legend>最新照片</legend>
-            <!-- 广告轮播 -->
-            <div id="ad-carousel" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#ad-carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#ad-carousel" data-slide-to="1"></li>
-                    <li data-target="#ad-carousel" data-slide-to="2"></li>
-                    <li data-target="#ad-carousel" data-slide-to="3"></li>
-                    <li data-target="#ad-carousel" data-slide-to="4"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <#assign index = 1 >
-                    <#list picList as pic>
-                        <#if pic_index==0>
-                            <div class="item active">
-                                <a href="${pic.url}" data-lightbox="example-set">
-                                    <img src="${pic.url}" class="center-block" height="240px" style="height: 240px">
-                                </a>
-                            </div>
-                        <#else>
-                            <div class="item">
-                                <a href="${pic.url}" data-lightbox="example-set">
-                                    <img src="${pic.url}" class="center-block" height="240px" style="height: 240px">
-                                </a>
-                            </div>
-                        </#if>
-                        <#assign index = index+1 >
-                    </#list>
-                </div>
-                <a class="left carousel-control" href="#ad-carousel" data-slide="prev"><span
-                        class="glyphicon glyphicon-chevron-left"></span></a>
-                <a class="right carousel-control" href="#ad-carousel" data-slide="next"><span
-                        class="glyphicon glyphicon-chevron-right"></span></a>
-            </div>
+            <!--<legend>最新照片</legend>-->
+            <!--&lt;!&ndash; 广告轮播 &ndash;&gt;-->
+            <!--<div id="ad-carousel" class="carousel slide" data-ride="carousel">-->
+                <!--<ol class="carousel-indicators">-->
+                    <!--<li data-target="#ad-carousel" data-slide-to="0" class="active"></li>-->
+                    <!--<li data-target="#ad-carousel" data-slide-to="1"></li>-->
+                    <!--<li data-target="#ad-carousel" data-slide-to="2"></li>-->
+                    <!--<li data-target="#ad-carousel" data-slide-to="3"></li>-->
+                    <!--<li data-target="#ad-carousel" data-slide-to="4"></li>-->
+                <!--</ol>-->
+                <!--<div class="carousel-inner">-->
+                    <!--<#assign index = 1 >-->
+                    <!--<#list picList as pic>-->
+                        <!--<#if pic_index==0>-->
+                            <!--<div class="item active">-->
+                                <!--<a href="${pic.url}" data-lightbox="example-set">-->
+                                    <!--<img src="${pic.url}" class="center-block" height="240px" style="height: 240px">-->
+                                <!--</a>-->
+                            <!--</div>-->
+                        <!--<#else>-->
+                            <!--<div class="item">-->
+                                <!--<a href="${pic.url}" data-lightbox="example-set">-->
+                                    <!--<img src="${pic.url}" class="center-block" height="240px" style="height: 240px">-->
+                                <!--</a>-->
+                            <!--</div>-->
+                        <!--</#if>-->
+                        <!--<#assign index = index+1 >-->
+                    <!--</#list>-->
+                <!--</div>-->
+                <!--<a class="left carousel-control" href="#ad-carousel" data-slide="prev"><span-->
+                        <!--class="glyphicon glyphicon-chevron-left"></span></a>-->
+                <!--<a class="right carousel-control" href="#ad-carousel" data-slide="next"><span-->
+                        <!--class="glyphicon glyphicon-chevron-right"></span></a>-->
+            <!--</div>-->
         <div style="padding-top: 50px">
         </div>
             <#assign var = 0 >
@@ -111,53 +111,63 @@
         </div>
         <div style="padding-top: 50px">
             <#assign var = 0 >
-                <legend>评论排行</legend>
-                <#list mostCommentBlogList as x>
-                    <div style="padding-bottom: 7px;padding-left: 10px">
-                        <#if var==0>
-                            <span class="badge" style="font-size: 20px;width: 27px;color: lightskyblue;background-color: snow">${var+1}</span>
-                            <#elseif var==1>
-                                <span class="badge" style="font-size: 17px;width: 27px;color: lightskyblue;background-color: snow">${var+1}</span>
-                                <#elseif var==2>
-                                    <span class="badge" style="font-size: 14px;width: 27px;color: lightskyblue;background-color: snow">${var+1}</span>
-                                    <#else>
-                                        <span class="badge" style="font-size: 12px;width: 27px;color: lightskyblue;background-color: snow">${var+1}</span>
-                        </#if>
-                        <a style="color: slategray" href="${base}/detail/${x.id}">
-                            <#if x.type==0>
-                                【学习】
-                                <#elseif x.type==1>
-                                    【生活】
-                                    <#else>
-                                        【杂记】
-                            </#if>
-                            ${x.title}</a>
-                    </div>
-                    <#assign var = var+1 >
-                </#list>
-        </div>
-        <div style="padding-top: 50px">
-                <legend>最新评论</legend>
-                <#list commentList as x>
-                    <div style="padding-left: 10px;padding-right: 10px">
-                        <a style="color: gray;font-size: 15px;overflow: hidden;text-overflow:ellipsis;width: 300px;display: block" href="${base}/detail/${x.id}"><i>Re：${x.title}</i></a>
-                        <div style="font-size:15px;padding-top: 10px;padding-bottom: 10px">
-                            <span style="padding-left: 10px;line-height:150%"><span style="color: gray" class="glyphicon glyphicon-user" aria-hidden="true"></span> ${x.username}：${x.content!""}</span>
-                        </div>
-                        <span style="color:gray">
-                            <i>${x.create_time}</i>
-                        </span>
+                <legend>好玩段子</legend>
+                <#list jokeList as x>
+                    <div style="font-size:15px;padding-top: 10px;padding-bottom: 10px">
+                        </span> ${x.text}</span>
                     </div>
                     <hr>
                 </#list>
         </div>
-        <div style="padding-top: 30px;">
-            <fieldset>
-                <div><label>当日访问：${info.today_click_times} 次</label></div>
-                <div><label>历史访问：${info.history_click_times} 次</label></div>
-            </fieldset>
+        <!--<div style="padding-top: 50px">-->
+            <!--<#assign var = 0 >-->
+                <!--<legend>评论排行</legend>-->
+                <!--<#list mostCommentBlogList as x>-->
+                    <!--<div style="padding-bottom: 7px;padding-left: 10px">-->
+                        <!--<#if var==0>-->
+                            <!--<span class="badge" style="font-size: 20px;width: 27px;color: lightskyblue;background-color: snow">${var+1}</span>-->
+                            <!--<#elseif var==1>-->
+                                <!--<span class="badge" style="font-size: 17px;width: 27px;color: lightskyblue;background-color: snow">${var+1}</span>-->
+                                <!--<#elseif var==2>-->
+                                    <!--<span class="badge" style="font-size: 14px;width: 27px;color: lightskyblue;background-color: snow">${var+1}</span>-->
+                                    <!--<#else>-->
+                                        <!--<span class="badge" style="font-size: 12px;width: 27px;color: lightskyblue;background-color: snow">${var+1}</span>-->
+                        <!--</#if>-->
+                        <!--<a style="color: slategray" href="${base}/detail/${x.id}">-->
+                            <!--<#if x.type==0>-->
+                                <!--【学习】-->
+                                <!--<#elseif x.type==1>-->
+                                    <!--【生活】-->
+                                    <!--<#else>-->
+                                        <!--【杂记】-->
+                            <!--</#if>-->
+                            <!--${x.title}</a>-->
+                    <!--</div>-->
+                    <!--<#assign var = var+1 >-->
+                <!--</#list>-->
+        <!--</div>-->
+        <!--<div style="padding-top: 50px">-->
+                <!--<legend>最新评论</legend>-->
+                <!--<#list commentList as x>-->
+                    <!--<div style="padding-left: 10px;padding-right: 10px">-->
+                        <!--<a style="color: gray;font-size: 15px;overflow: hidden;text-overflow:ellipsis;width: 300px;display: block" href="${base}/detail/${x.id}"><i>Re：${x.title}</i></a>-->
+                        <!--<div style="font-size:15px;padding-top: 10px;padding-bottom: 10px">-->
+                            <!--<span style="padding-left: 10px;line-height:150%"><span style="color: gray" class="glyphicon glyphicon-user" aria-hidden="true"></span> ${x.username}：${x.content!""}</span>-->
+                        <!--</div>-->
+                        <!--<span style="color:gray">-->
+                            <!--<i>${x.create_time}</i>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                    <!--<hr>-->
+                <!--</#list>-->
+        <!--</div>-->
+        <!--<div style="padding-top: 30px;">-->
+            <!--<fieldset>-->
+                <!--<div><label>当日访问：${info.today_click_times} 次</label></div>-->
+                <!--<div><label>历史访问：${info.history_click_times} 次</label></div>-->
+            <!--</fieldset>-->
 
-        </div>
+        <!--</div>-->
     </div>
     <div class="container col-lg-2"></div>
 </div>

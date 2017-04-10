@@ -143,7 +143,7 @@
                                                 <p>您确认要删除吗？</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <a href="${base}/admin/deleteCar/${x.id}" class="btn btn-warning">确定</a>
+                                                <a onclick="deleteBlog(${x.id})" class="btn btn-warning">确定</a>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                             </div>
                                         <#elseif session.adminType==1>
@@ -191,8 +191,8 @@
                         <div style="padding-top: 5px">
                             <label style="font-size: 15px">分类:</label>
                             <select name="blog.type" class="form-control" style="font-size:15px;width:250px;display: inline">
-                                <option value="0">学习</option>
-                                <option value="1">生活</option>
+                                <option value="0">技术</option>
+                                <option value="1">工具</option>
                                 <option value="2">随笔</option>
                             </select>
                         </div>
@@ -326,6 +326,18 @@
                 j('#pictureSrc').val(last[1]);   //保存路径
             }
         });
+    }
+
+    function deleteBlog(id) {
+        alert(id);
+        j.ajax({
+            url:"${base}/deleteBlog",
+            data:"id="+id,
+            async:false,
+            success:function (data) {
+                alert("删除成功");
+            }
+        })
     }
 
 

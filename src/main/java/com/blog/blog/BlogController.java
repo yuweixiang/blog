@@ -3,6 +3,7 @@ package com.blog.blog;
 import com.blog.Album.Album;
 import com.blog.comment.Comment;
 import com.blog.info.Info;
+import com.blog.jokes.JokeUtil;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
@@ -43,6 +44,7 @@ public class BlogController extends Controller {
 		setAttr("mostLookBlogList",Blog.dao.mostLookBlog());
 		//评论量最多的文章
 		setAttr("mostCommentBlogList",Blog.dao.mostCommentBlog());
+		setAttr("jokeList", JokeUtil.buildPageJokes());
 		//最近评论
 		setAttr("commentList",Comment.dao.getRecentCommentList());
 		//最近照片
@@ -50,6 +52,11 @@ public class BlogController extends Controller {
 		setAttr("pageSearchType", 0);
 		render("blog_index.html");
 		//renderJson(Blog.dao.paginate(getParaToInt(0, 1), 10));
+	}
+
+	@Before(Tx.class)
+	public void deleteBlog(String id){
+		System.out.println("");
 	}
 
 	//详情页面
@@ -182,8 +189,9 @@ public class BlogController extends Controller {
 			if("admin".equals(username)&&"123654".equals(password)){
 				setAttr("blogPage", Blog.dao.paginate(getParaToInt(0, 1), 15));
 				render("blog_add.html");
-			}else
+			}else {
 				renderJson("用户名密码错误");
+			}
 		}
 	}
 
