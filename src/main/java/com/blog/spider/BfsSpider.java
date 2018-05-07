@@ -1,7 +1,19 @@
 package com.blog.spider;
 
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.lang3.StringUtils;
+
 import javax.annotation.Resource;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -63,5 +75,42 @@ public class BfsSpider {
 //            }
         }
         return "";
+    }
+
+    public static void main(String[] args){
+        List<String> info = new ArrayList<String>();
+        // 定义输入输出流
+        InputStream input = null;
+        // 得到 post 方法
+        GetMethod getMethod = new GetMethod("https://s.m.taobao.com/search?nid=538814445976");
+        try {
+            HttpClient httpClient = new HttpClient();
+            // 执行，返回状态码
+            int statusCode = httpClient.executeMethod(getMethod);
+            // 针对状态码进行处理
+            // 简单起见，只处理返回值为 200 的状态码
+            if (statusCode == HttpStatus.SC_OK) {
+                input = getMethod.getResponseBodyAsStream();
+                BufferedReader bufferedReader = new BufferedReader(
+                        new InputStreamReader(input, "utf-8"));
+                String result = bufferedReader.readLine();
+                if (StringUtils.isBlank(result)) {
+                }
+                JSONObject object = JSONObject.parseObject(result);
+                JSONArray jsonArray = object.getJSONArray("itemsArray");
+                if (jsonArray == null || jsonArray.size() == 0) {
+                }
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                String originTag = jsonObject.getString("auctionTag");
+                System.out.println(originTag);
+            }
+            // 关闭输入流
+            if (input != null) {
+                input.close();
+            }
+        } catch (Exception e) {
+        } finally {
+            getMethod.releaseConnection();
+        }
     }
 }

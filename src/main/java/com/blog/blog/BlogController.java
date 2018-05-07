@@ -56,7 +56,7 @@ public class BlogController extends Controller {
 
 	@Before(Tx.class)
 	public void deleteBlog(String id){
-		System.out.println("");
+		System.out.println("id");
 	}
 
 	//详情页面

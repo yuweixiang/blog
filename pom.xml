@@ -17,6 +17,11 @@
             <version>0.2</version>
         </dependency>
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.8.sec01</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
@@ -48,6 +53,14 @@
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.taobao.util</groupId>
+            <artifactId>taobao-express</artifactId>
+            <version>3.0.17</version>
+        </dependency>
+
         <dependency>
             <groupId>org.htmlparser</groupId>
             <artifactId>htmlparser</artifactId>
